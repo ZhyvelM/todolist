@@ -78,7 +78,7 @@ class AppDarkTheme implements Palette {
   Color backPrimary = const Color(0xff161618);
 
   @override
-  Color backSecondary = const Color(0xff161618);
+  Color backSecondary = const Color(0xff252528);
 
   @override
   Color blue = const Color(0xff0a84ff);
