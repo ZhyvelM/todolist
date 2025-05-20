@@ -2,18 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:todolist/ui_kit/icons/app_icons.dart';
 import 'package:todolist/ui_kit/palette.dart';
 
-class CheckBox extends StatefulWidget {
-  const CheckBox({super.key, required this.onChanged, required this.value, this.isPrioritized = false});
+class AppCheckBox extends StatefulWidget {
+  const AppCheckBox({super.key, required this.onChanged, required this.value, this.isPrioritized = false});
 
   final Function(bool?) onChanged;
   final bool value;
   final bool isPrioritized;
 
   @override
-  State<CheckBox> createState() => _CheckBoxState();
+  State<AppCheckBox> createState() => _AppCheckBoxState();
 }
 
-class _CheckBoxState extends State<CheckBox> {
+class _AppCheckBoxState extends State<AppCheckBox> {
   late bool value;
 
   @override

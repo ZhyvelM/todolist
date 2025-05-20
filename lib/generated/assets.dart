@@ -9,6 +9,6 @@ class Assets {
   static const String uiKitPalette = 'lib/ui_kit/palette.dart';
   static const String uiKitTextStyles = 'lib/ui_kit/text_styles.dart';
   static const String utilsExtensions = 'lib/utils/extensions.dart';
-  static const String widgetsCheckBox = 'lib/ui_kit/widgets/check_box.dart';
+  static const String widgetsCheckBox = 'lib/ui_kit/widgets/app_check_box.dart';
   static const String widgetsToDoTile = 'lib/ui_kit/widgets/to_do_tile.dart';
 }
