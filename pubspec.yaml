@@ -80,12 +80,3 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
-  assets:
-    - lib/
-    - lib/features/
-    - lib/features/main_feature/
-    - lib/features/main_feature/data/
-    - lib/features/main_feature/domain/
-    - lib/features/main_feature/presentation/
-    - lib/features/add_edit_feature/
-
