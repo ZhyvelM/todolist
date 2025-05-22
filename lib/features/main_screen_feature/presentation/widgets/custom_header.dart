@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:todolist/ui_kit/app_text_styles.dart';
 import 'package:todolist/ui_kit/icons/app_icons.dart';
@@ -29,19 +31,18 @@ class CustomHeader extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final ratio = (constraints.maxHeight - minHeight) / (maxHeight - minHeight);
-        final offset = ratio * 44;
         return Container(
           decoration: DecorationTween(
-            begin: BoxDecoration(
+            begin: BoxDecoration(color: palette.backPrimary),
+            end: BoxDecoration(
               color: palette.backPrimary,
               boxShadow: [
                 BoxShadow(color: Color(0x33000000), offset: Offset(0, 1), blurRadius: 10, spreadRadius: 0),
                 BoxShadow(color: Color(0x1f000000), offset: Offset(0, 4), blurRadius: 5, spreadRadius: 0),
               ],
             ),
-            end: BoxDecoration(color: palette.backPrimary),
-          ).lerp(ratio),
-          padding: EdgeInsets.only(left: 16 + offset),
+          ).lerp(pow(1 - ratio, 20).toDouble()),
+          padding: EdgeInsets.only(left: 16 + 44 * ratio),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
