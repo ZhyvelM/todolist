@@ -14,7 +14,6 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   late ScrollController scrollController;
-  late AnimationController titleOffsetController;
 
   late bool completedTasksVisibility;
 
