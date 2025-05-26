@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:todolist/features/add_edit_screen_feature/presentation/add_edit_screen.dart';
 import 'package:todolist/features/main_screen_feature/presentation/widgets/custom_header.dart';
 import 'package:todolist/features/main_screen_feature/presentation/widgets/to_do_tile.dart';
 import 'package:todolist/ui_kit/app_text_styles.dart';
 import 'package:todolist/ui_kit/icons/app_icons.dart';
 import 'package:todolist/ui_kit/palette.dart';
+import 'package:todolist/utils/enums.dart';
+import 'package:todolist/utils/models/to_do_task.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -24,10 +27,14 @@ class _MainScreenState extends State<MainScreen> {
 
     final double maxHeight = 116 + MediaQuery.of(context).padding.top;
     final double minHeight = 56 + MediaQuery.of(context).padding.top;
+
+    final now = DateTime.now();
     return Scaffold(
       backgroundColor: palette.backPrimary,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (_) => AddEditScreen(task: null)));
+        },
         backgroundColor: palette.blue,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(56)),
         child: Icon(AppIcons.add, color: palette.white),
@@ -71,16 +78,28 @@ class _MainScreenState extends State<MainScreen> {
                 padding: EdgeInsets.only(top: 8, bottom: 8),
                 sliver: SliverList(
                   delegate: SliverChildBuilderDelegate((context, index) {
+                    final task = ToDoTask(
+                      'Купить что-то, где-то, зачем-то, но зачем не очень понятно, но точно чтобы показать как обрезается',
+                      TaskPriority.values[index % 3],
+                      now.add(Duration(days: index)),
+                    );
                     if (index == 15) {
                       return InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (_) => AddEditScreen(task: null)));
+                        },
                         child: Container(
                           padding: EdgeInsets.fromLTRB(54, 14, 16, 14),
                           child: Text('Новое', style: textStyle.body.copyWith(color: palette.labelTertiary)),
                         ),
                       );
                     }
-                    return ToDoTile();
+                    return ToDoTile(
+                      task: task,
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (_) => AddEditScreen(task: task)));
+                      },
+                    );
                   }, childCount: 15 + 1),
                 ),
               ),
