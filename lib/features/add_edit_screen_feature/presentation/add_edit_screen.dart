@@ -20,31 +20,36 @@ class AddEditScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: palette.backPrimary,
         toolbarHeight: 56,
+        scrolledUnderElevation: 4,
+        surfaceTintColor: palette.backPrimary,
+        shadowColor: Color(0xff000000),
         leading: IconButton(onPressed: () {}, icon: Icon(AppIcons.close, color: palette.labelPrimary)),
         actions: [
           TextButton(onPressed: () {}, child: Text('Сохранить', style: textStyle.button.copyWith(color: palette.blue))),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SizedBox(height: 8),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: AppTextField(controller: TextEditingController(), hintText: 'Что надо сделать…', initialText: ''),
-          ),
-          SizedBox(height: 12),
-          AppDropdown(initialValue: TaskPriority.none, onChange: (value) {}),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Divider(color: palette.separator, height: 0.5),
-          ),
-          DateTimeToggleTile(isActive: true, onDateSelected: (date) {}, onActiveChanged: (bool) {}),
-          SizedBox(height: 24),
-          Divider(color: palette.separator, height: 0.5),
-          SizedBox(height: 8),
-          TaskDeleteButton(onTap: () {}),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: AppTextField(controller: TextEditingController(), hintText: 'Что надо сделать…', initialText: ''),
+            ),
+            SizedBox(height: 12),
+            AppDropdown(initialValue: TaskPriority.none, onChange: (value) {}),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Divider(color: palette.separator, height: 0.5),
+            ),
+            DateTimeToggleTile(isActive: true, onDateSelected: (date) {}, onActiveChanged: (bool) {}),
+            SizedBox(height: 24),
+            Divider(color: palette.separator, height: 0.5),
+            SizedBox(height: 8),
+            TaskDeleteButton(onTap: () {}),
+          ],
+        ),
       ),
     );
   }
