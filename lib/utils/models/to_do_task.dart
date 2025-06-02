@@ -1,9 +1,15 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:todolist/utils/enums.dart';
 
-class ToDoTask {
-  ToDoTask(this.description, this.priority, this.doUntil);
+part 'to_do_task.freezed.dart';
 
-  final String description;
-  final TaskPriority priority;
-  final DateTime doUntil;
+@freezed
+abstract class ToDoTask with _$ToDoTask {
+  const factory ToDoTask({
+    required int id,
+    required String description,
+    required TaskPriority priority,
+    required DateTime? doUntil,
+    required bool completed,
+  }) = _ToDoTask;
 }
