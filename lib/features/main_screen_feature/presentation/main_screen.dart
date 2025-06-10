@@ -57,20 +57,7 @@ class _MainScreenState extends State<MainScreen> {
               controller: scrollController,
               slivers: [
                 _buildAppBar(context, state),
-                SliverPadding(
-                  padding: EdgeInsets.symmetric(vertical: 16, horizontal: 8),
-                  sliver: DecoratedSliver(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: palette.backSecondary,
-                      boxShadow: [
-                        BoxShadow(color: Color(0x1f000000), blurRadius: 2, offset: Offset(0, 2)),
-                        BoxShadow(color: Color(0x0f000000), blurRadius: 2),
-                      ],
-                    ),
-                    sliver: _buildTasksList(context, state),
-                  ),
-                ),
+                _buildTasksList(context, state),
                 SliverToBoxAdapter(child: SizedBox(height: 24)),
               ],
             ),
@@ -85,37 +72,60 @@ class _MainScreenState extends State<MainScreen> {
     final palette = Palette.of(context);
     final taskList = state.tasks;
     return SliverPadding(
-      padding: EdgeInsets.symmetric(vertical: 8),
-      sliver: SlidableAutoCloseBehavior(
-        key: const ValueKey("slidableAutoCloseBehavior"),
-        child: SliverList(
-          delegate: SliverChildBuilderDelegate((context, index) {
-            if (index == taskList.length) {
-              return InkWell(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => AddEditScreen(task: null)));
-                },
-                child: Container(
-                  padding: EdgeInsets.fromLTRB(54, 14, 16, 14),
-                  child: Text('Новое', style: textStyle.body.copyWith(color: palette.labelTertiary)),
-                ),
-              );
-            }
-            final task = taskList[index];
-            return SizedBox(
-              width: !completedTasksVisibility && task.completed ? 0 : null,
-              height: !completedTasksVisibility && task.completed ? 0 : null,
-              child: ToDoTile(
-                task: task,
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => AddEditScreen(task: task)));
-                },
-                onCompletionChanged:
-                    (value) => context.read<MainScreenBloc>().add(CompleteTaskChanged(id: task.id, value: value)),
-                onDelete: () => context.read<MainScreenBloc>().add(DeleteTask(id: task.id)),
-              ),
-            );
-          }, childCount: taskList.length + 1),
+      padding: EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+      sliver: DecoratedSliver(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: palette.backSecondary,
+          boxShadow: [
+            BoxShadow(color: Color(0x1f000000), blurRadius: 2, offset: Offset(0, 2)),
+            BoxShadow(color: Color(0x0f000000), blurRadius: 2),
+          ],
+        ),
+        sliver: SliverPadding(
+          padding: EdgeInsets.symmetric(vertical: 8),
+          sliver: SlidableAutoCloseBehavior(
+            key: const ValueKey("slidableAutoCloseBehavior"),
+            child: SliverList(
+              delegate: SliverChildBuilderDelegate((context, index) {
+                if (index == taskList.length) {
+                  return InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (_) => AddEditScreen.add()));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(54, 14, 16, 14),
+                      child: Text('Новое', style: textStyle.body.copyWith(color: palette.labelTertiary)),
+                    ),
+                  );
+                }
+                final task = taskList[index];
+                return SizedBox(
+                  width: !completedTasksVisibility && task.completed ? 0 : null,
+                  height: !completedTasksVisibility && task.completed ? 0 : null,
+                  child: ToDoTile(
+                    task: task,
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder:
+                              (_) => AddEditScreen.edit(
+                                task: task,
+                                onDelete: () {
+                                  context.read<MainScreenBloc>().add(DeleteTask(id: task.id));
+                                },
+                              ),
+                        ),
+                      );
+                    },
+                    onCompletionChanged:
+                        (value) => context.read<MainScreenBloc>().add(CompleteTaskChanged(id: task.id, value: value)),
+                    onDelete: () => context.read<MainScreenBloc>().add(DeleteTask(id: task.id)),
+                  ),
+                );
+              }, childCount: taskList.length + 1),
+            ),
+          ),
         ),
       ),
     );
