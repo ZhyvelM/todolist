@@ -2,12 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:todolist/ui_kit/app_text_styles.dart';
 import 'package:todolist/ui_kit/palette.dart';
 
-class AppTextField extends StatelessWidget {
-  const AppTextField({super.key, required this.controller, required this.hintText, required this.initialText});
+class AppTextField extends StatefulWidget {
+  const AppTextField({super.key, required this.hintText, required this.initialText, required this.onChanged});
 
-  final TextEditingController controller;
   final String hintText;
   final String initialText;
+
+  final Function(String) onChanged;
+
+  @override
+  State<AppTextField> createState() => _AppTextFieldState();
+}
+
+class _AppTextFieldState extends State<AppTextField> {
+  late TextEditingController controller;
+
+  @override
+  void initState() {
+    controller = TextEditingController(text: widget.initialText);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +44,13 @@ class AppTextField extends StatelessWidget {
         ],
       ),
       child: TextField(
+        onChanged: widget.onChanged,
+        controller: controller,
         maxLines: null,
         minLines: 3,
         decoration: InputDecoration(
           labelStyle: textStyle.body.copyWith(color: palette.labelPrimary, height: 8 / 9),
-          hintText: hintText,
+          hintText: widget.hintText,
           hintStyle: textStyle.body.copyWith(color: palette.labelTertiary, height: 8 / 9),
           border: InputBorder.none,
         ),

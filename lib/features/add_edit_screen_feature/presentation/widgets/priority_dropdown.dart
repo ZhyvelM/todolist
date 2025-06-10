@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:todolist/ui_kit/app_text_styles.dart';
-import 'package:todolist/ui_kit/icons/app_icons.dart';
 import 'package:todolist/ui_kit/palette.dart';
 import 'package:todolist/utils/enums.dart';
 
-class AppDropdown extends StatefulWidget {
-  const AppDropdown({super.key, required this.initialValue, required this.onChange});
+class PriorityDropdown extends StatefulWidget {
+  const PriorityDropdown({super.key, required this.initialValue, required this.onChange});
 
   final TaskPriority initialValue;
 
   final Function(TaskPriority) onChange;
 
   @override
-  State<AppDropdown> createState() => _AppDropdownState();
+  State<PriorityDropdown> createState() => _PriorityDropdownState();
 }
 
-class _AppDropdownState extends State<AppDropdown> {
+class _PriorityDropdownState extends State<PriorityDropdown> {
   late TaskPriority value;
 
   @override

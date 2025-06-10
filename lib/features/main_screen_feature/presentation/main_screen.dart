@@ -47,7 +47,7 @@ class _MainScreenState extends State<MainScreen> {
             backgroundColor: palette.backPrimary,
             floatingActionButton: FloatingActionButton(
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (_) => AddEditScreen(task: null)));
+                Navigator.of(context).push(MaterialPageRoute(builder: (_) => AddEditScreen.add()));
               },
               backgroundColor: palette.blue,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(56)),
