@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -42,11 +43,13 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
   FutureOr<void> _deleteTask(DeleteTask event, Emitter<MainScreenState> emit) {
     final index = state.tasks.indexWhere((task) => task.id == event.id);
     emit(state.copyWith(tasks: state.tasks.toList()..removeAt(index)));
+    log('Deleted Task with id = ${event.id}');
   }
 
   FutureOr<void> _completeTaskChanged(CompleteTaskChanged event, Emitter<MainScreenState> emit) {
     final index = state.tasks.indexWhere((task) => task.id == event.id);
     final newTask = state.tasks[index].copyWith(completed: event.value);
     emit(state.copyWith(tasks: state.tasks.toList()..[index] = newTask));
+    log('Completion of Task with id = ${event.id} changed to: ${event.value}');
   }
 }

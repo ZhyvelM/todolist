@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
@@ -39,7 +41,11 @@ class AddEditScreenBloc extends Bloc<AddEditScreenEvent, AddEditScreenState> {
     emit(state.copyWith(doUntilSwitch: event.newValue));
   }
 
-  _delete(Delete event, Emitter<AddEditScreenState> emit) {}
+  _delete(Delete event, Emitter<AddEditScreenState> emit) {
+    log('Task deleted');
+  }
 
-  _save(Save event, Emitter<AddEditScreenState> emit) {}
+  _save(Save event, Emitter<AddEditScreenState> emit) {
+    log('Task saved');
+  }
 }
