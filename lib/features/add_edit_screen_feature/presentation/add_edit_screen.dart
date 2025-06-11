@@ -1,10 +1,9 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todolist/features/add_edit_screen_feature/presentation/bloc/add_edit_screen_bloc.dart';
 import 'package:todolist/features/add_edit_screen_feature/presentation/widgets/date_time_toggle_tile.dart';
 import 'package:todolist/features/add_edit_screen_feature/presentation/widgets/task_delete_button.dart';
+import 'package:todolist/generated/l10n.dart';
 import 'package:todolist/ui_kit/app_text_styles.dart';
 import 'package:todolist/ui_kit/icons/app_icons.dart';
 import 'package:todolist/ui_kit/palette.dart';
@@ -25,6 +24,7 @@ class AddEditScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final palette = Palette.of(context);
     final textStyle = AppTextStyle();
+    final locale = AppLocale.of(context);
     return BlocProvider(
       create: (context) => AddEditScreenBloc(task),
       child: BlocBuilder<AddEditScreenBloc, AddEditScreenState>(
@@ -50,7 +50,7 @@ class AddEditScreen extends StatelessWidget {
                     bloc.add(Save());
                     Navigator.of(context).maybePop();
                   },
-                  child: Text('Сохранить', style: textStyle.button.copyWith(color: palette.blue)),
+                  child: Text(locale.save, style: textStyle.button.copyWith(color: palette.blue)),
                 ),
               ],
             ),
@@ -62,7 +62,7 @@ class AddEditScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: AppTextField(
-                      hintText: 'Что надо сделать…',
+                      hintText: locale.what_to_do,
                       initialText: task?.description ?? '',
                       onChanged: (text) => bloc.add(DescriptionChanged(newText: text)),
                     ),

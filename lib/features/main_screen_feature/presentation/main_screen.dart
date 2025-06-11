@@ -4,6 +4,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:todolist/features/add_edit_screen_feature/presentation/add_edit_screen.dart';
 import 'package:todolist/features/main_screen_feature/presentation/widgets/custom_header.dart';
 import 'package:todolist/features/main_screen_feature/presentation/widgets/to_do_tile.dart';
+import 'package:todolist/generated/l10n.dart';
 import 'package:todolist/ui_kit/app_text_styles.dart';
 import 'package:todolist/ui_kit/icons/app_icons.dart';
 import 'package:todolist/ui_kit/palette.dart';
@@ -38,7 +39,6 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     final palette = Palette.of(context);
-
     return BlocProvider(
       create: (context) => MainScreenBloc(),
       child: BlocBuilder<MainScreenBloc, MainScreenState>(
@@ -70,6 +70,7 @@ class _MainScreenState extends State<MainScreen> {
   SliverPadding _buildTasksList(BuildContext context, MainScreenState state) {
     final textStyle = AppTextStyle();
     final palette = Palette.of(context);
+    final locale = AppLocale.of(context);
     final taskList = state.tasks;
     return SliverPadding(
       padding: EdgeInsets.symmetric(vertical: 16, horizontal: 8),
@@ -85,7 +86,6 @@ class _MainScreenState extends State<MainScreen> {
         sliver: SliverPadding(
           padding: EdgeInsets.symmetric(vertical: 8),
           sliver: SlidableAutoCloseBehavior(
-            key: const ValueKey("slidableAutoCloseBehavior"),
             child: SliverList(
               delegate: SliverChildBuilderDelegate((context, index) {
                 if (index == taskList.length) {
@@ -95,7 +95,7 @@ class _MainScreenState extends State<MainScreen> {
                     },
                     child: Container(
                       padding: EdgeInsets.fromLTRB(54, 14, 16, 14),
-                      child: Text('Новое', style: textStyle.body.copyWith(color: palette.labelTertiary)),
+                      child: Text(locale.create_new, style: textStyle.body.copyWith(color: palette.labelTertiary)),
                     ),
                   );
                 }
@@ -133,6 +133,7 @@ class _MainScreenState extends State<MainScreen> {
 
   SliverAppBar _buildAppBar(BuildContext context, MainScreenState state) {
     final palette = Palette.of(context);
+    final locale = AppLocale.of(context);
     final double maxHeight = 116 + MediaQuery.of(context).padding.top;
     final double minHeight = 56 + MediaQuery.of(context).padding.top;
 
@@ -145,8 +146,8 @@ class _MainScreenState extends State<MainScreen> {
       stretch: false,
       scrolledUnderElevation: 0,
       flexibleSpace: CustomHeader(
-        title: 'Мои дела',
-        subtitle: 'Выполнено — ${state.completedTasksCount}',
+        title: locale.my_tasks,
+        subtitle: '${locale.completed} — ${state.completedTasksCount}',
         maxHeight: maxHeight,
         minHeight: minHeight,
         onVisibilityIconTap: (value) {

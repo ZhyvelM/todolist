@@ -9,6 +9,8 @@ import 'package:todolist/ui_kit/widgets/app_icon_button.dart';
 import 'package:todolist/utils/enums.dart';
 import 'package:todolist/utils/models/to_do_task.dart';
 
+const String _kGroupTag = 'to_do_list_task';
+
 class ToDoTile extends StatelessWidget {
   const ToDoTile({
     super.key,
@@ -69,7 +71,7 @@ class ToDoTile extends StatelessWidget {
       child: Slidable(
         enabled: !task.completed,
         key: ValueKey(task.id),
-        groupTag: 'to_do_list_task',
+        groupTag: _kGroupTag,
         startActionPane: ActionPane(
           extentRatio: height / (screenWidth - 16),
           motion: ScrollMotion(),
